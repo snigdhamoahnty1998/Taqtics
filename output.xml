@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.13.0 on win32)" generated="2024-12-02T18:03:42.095766" rpa="false" schemaversion="5">
+<suite id="s1" name="Api" source="c:\Users\snigd\OneDrive\Desktop\Robot_Framework_Assesment\Api.robot">
+<test id="s1-t1" name="Valid Admin Login Should Generate Token" line="17">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-12-02T18:03:42.990875" level="INFO">Creating Session using : alias=auth_session, url=https://landmark.taqtics.co/v1/external, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>auth_session</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-12-02T18:03:42.990058" elapsed="0.004891"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2024-12-02T18:03:43.001320" level="FAIL">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</msg>
+<var>${response}</var>
+<arg>auth_session${API_ENDPOINT}</arg>
+<arg>json=${VALID_ADMIN_CREDENTIALS}</arg>
+<doc>Sends a POST request.</doc>
+<status status="FAIL" start="2024-12-02T18:03:42.996142" elapsed="0.012458">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</status>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.009694" elapsed="0.000394"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<var>${token}</var>
+<arg>${response.json()}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.011051" elapsed="0.000407"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<arg>${token}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.012250" elapsed="0.000191"/>
+</kw>
+<doc>Verify token is generated with valid admin credentials.</doc>
+<status status="FAIL" start="2024-12-02T18:03:42.987706" elapsed="0.025637">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</status>
+</test>
+<test id="s1-t2" name="Non-Admin Login Should Return Forbidden Error" line="26">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-12-02T18:03:43.017068" level="INFO">Creating Session using : alias=auth_session, url=https://landmark.taqtics.co/v1/external, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>auth_session</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-12-02T18:03:43.016504" elapsed="0.001195"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2024-12-02T18:03:43.020204" level="FAIL">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</msg>
+<var>${response}</var>
+<arg>auth_session${API_ENDPOINT}</arg>
+<arg>json={"username": "${NON_ADMIN_USER}", "password": "${NON_ADMIN_PASS}"}</arg>
+<doc>Sends a POST request.</doc>
+<status status="FAIL" start="2024-12-02T18:03:43.018662" elapsed="0.006021">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</status>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>403</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.025774" elapsed="0.000257"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<var>${error}</var>
+<arg>${response.json()}</arg>
+<arg>error</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.026876" elapsed="0.000315"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${error}</arg>
+<arg>"Access Denied"</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.028535" elapsed="0.000379"/>
+</kw>
+<doc>Verify non-admin credentials return 403 Forbidden error.</doc>
+<status status="FAIL" start="2024-12-02T18:03:43.015302" elapsed="0.015779">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</status>
+</test>
+<test id="s1-t3" name="Blank Credentials Should Return Error" line="35">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-12-02T18:03:43.039717" level="INFO">Creating Session using : alias=auth_session, url=https://landmark.taqtics.co/v1/external, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>auth_session</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-12-02T18:03:43.038955" elapsed="0.001349"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2024-12-02T18:03:43.045624" level="FAIL">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</msg>
+<var>${response}</var>
+<arg>auth_session${API_ENDPOINT}</arg>
+<arg>json={"username": "", "password": ""}</arg>
+<doc>Sends a POST request.</doc>
+<status status="FAIL" start="2024-12-02T18:03:43.042967" elapsed="0.009398">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</status>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>400</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.054441" elapsed="0.000364"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<var>${error}</var>
+<arg>${response.json()}</arg>
+<arg>error</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.056089" elapsed="0.000340"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${error}</arg>
+<arg>"Invalid input"</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" start="2024-12-02T18:03:43.057955" elapsed="0.000302"/>
+</kw>
+<doc>Verify blank credentials return 400 Bad Request error.</doc>
+<status status="FAIL" start="2024-12-02T18:03:43.037083" elapsed="0.022247">MissingSchema: Invalid URL 'auth_session/generateAuthToken': No scheme supplied. Perhaps you meant https://auth_session/generateAuthToken?</status>
+</test>
+<status status="FAIL" start="2024-12-02T18:03:42.104368" elapsed="0.957598"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="3" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="3" skip="0" id="s1" name="Api">Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
